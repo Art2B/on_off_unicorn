@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var PythonShell = require('python-shell');
+var spawn = require("child_process").spawn;
+
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -8,7 +10,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/on', function(req, res){
-  var pythonFile = global.appDir+'/python/on.py';
+  var pythonFile = 'on.py';
   PythonShell.run(pythonFile, function (err) {
     if (err) throw err;
     console.log('finished on');
@@ -16,15 +18,15 @@ router.post('/on', function(req, res){
   res.send('Light on !');
 });
 router.post('/off', function(req, res){
-  var pythonFile = global.appDir+'/python/off.py';
-  PythonShell.run(pythonFile, function (err) {
-    if (err) throw err;
-    console.log('finished off light');
+  var pythonFile = 'off.py';
+  var pyshell = new PythonShell('off.py', {
+    mode: 'text',
+    scriptPath: '/'+global.appDir+'/python'
   });
   res.send('Light off !');
 });
 router.post('/unicorn', function(req, res){
-  var pythonFile = global.appDir+'/python/unicorn.py';
+  var pythonFile = 'unicorn.py';
   PythonShell.run(pythonFile, function (err) {
     if (err) throw err;
     console.log('finished unicorn');
