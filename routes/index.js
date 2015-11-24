@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
 
 router.post('/:action', function(req, res){
   var pythonFile = req.params.action+'.py';
-  var pyshell = new PythonShell('off.py', {
+  var pyshell = new PythonShell(pythonFile, {
     mode: 'text',
     scriptPath: '/'+global.appDir+'/python'
   });
